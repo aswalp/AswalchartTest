@@ -99,6 +99,11 @@ class _ChartPageState extends State<ChartPage> {
               closeValueMapper: (ChartData data, _) => data.close,
               bearColor: Colors.red,
               bullColor: Colors.green,
+              dataLabelSettings: const DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.bottom,
+                textStyle: TextStyle(fontSize: 10),
+              ),
             ),
             LineSeries<ChartData, DateTime>(
               dataSource: dataList,
@@ -108,6 +113,15 @@ class _ChartPageState extends State<ChartPage> {
               // markerSettings: MarkerSettings(isVisible: true),
             )
           ],
+          trackballBehavior: TrackballBehavior(
+            enable: true,
+            activationMode: ActivationMode.singleTap,
+            tooltipAlignment: ChartAlignment.center,
+            tooltipDisplayMode: TrackballDisplayMode.floatAllPoints,
+            tooltipSettings: const InteractiveTooltip(
+                format:
+                    'O: point.open \nH: point.high\nL: point.low\nC: point.close'),
+          ),
         ),
       ),
     );
