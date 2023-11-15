@@ -88,7 +88,6 @@ class _ChartPageState extends State<ChartPage> {
             majorTickLines: const MajorTickLines(size: 0),
           ),
           series: <ChartSeries>[
-            // Renders CandleSeries
             CandleSeries<ChartData, DateTime>(
               // borderWidth: 6,
 
