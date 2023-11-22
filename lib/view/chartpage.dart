@@ -18,10 +18,13 @@ class _ChartPageState extends State<ChartPage> {
   late Timer timer;
   Random random = Random();
   DateTime currentMinute = DateTime.now();
+  int chartnumber = 0;
 
   @override
   void initState() {
     super.initState();
+    generateData();
+
     startDataGeneration();
   }
 
@@ -33,20 +36,42 @@ class _ChartPageState extends State<ChartPage> {
 
   void startDataGeneration() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      DateTime now = DateTime.now();
+
+      if (now.difference(currentMinute) >= const Duration(minutes: 1)) {
+        currentMinute = now;
+        chartnumber++;
+        setState(() {
+          generateData();
+        });
+      }
       setState(() {
-        generateData();
+        changebar();
       });
     });
+  }
+
+  void changebar() {
+    dataList[chartnumber].open = random.nextDouble() * 10.0 + 50.0;
+    dataList[chartnumber].close =
+        dataList[chartnumber].open + (random.nextBool() ? 1.0 : -1.0);
+    dataList[chartnumber].high =
+        dataList[chartnumber].open + random.nextDouble();
+    dataList[chartnumber].low =
+        dataList[chartnumber].open - random.nextDouble();
+    dataList[chartnumber].linevalue = random.nextDouble() * 10.0 + 40.0;
   }
 
   void generateData() {
     DateTime now = DateTime.now();
 
-    if (now.difference(currentMinute) >= const Duration(minutes: 1)) {
-      currentMinute = now;
-
-      dataList.clear();
-    }
+    // if (now.difference(currentMinute) >= const Duration(minutes: 1)) {
+    //   currentMinute = now;
+    //   chartnumber++;
+    //   setState(() {
+    //     generateData();
+    //   });
+    // }
 
     double open = random.nextDouble() * 10.0 + 50.0;
     double close = open + (random.nextBool() ? 1.0 : -1.0);
